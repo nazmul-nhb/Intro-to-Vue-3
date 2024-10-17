@@ -9,6 +9,7 @@ app.component('product-display', {
       required: true,
     }
   },
+
   template:
     /*html*/
     `<div class="product-display">
@@ -44,8 +45,8 @@ app.component('product-display', {
 
           <button
             class="button"
-            :class="{ disabledButton: !cart.length }"
-            :disabled="!inStock"
+            :class="{ disabledButton: !isVariantInCart }"
+            :disabled="!isVariantInCart"
             @click="removeFromCart">
             Remove Item
           </button>
@@ -58,13 +59,14 @@ app.component('product-display', {
       product: 'Socks',
       brand: 'Vue Mastery',
       selectedVariant: 0,
-      details: ['50% cotton', '30% wool', '20% polyester'],
+      details: ['50% Cotton', '30% Wool', '20% Polyester'],
       variants: [
         { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50 },
-        { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0 },
+        { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 5 },
       ]
     }
   },
+
   methods: {
     addToCart() {
       this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
@@ -76,6 +78,7 @@ app.component('product-display', {
       this.selectedVariant = index
     }
   },
+
   computed: {
     title() {
       return this.brand + ' ' + this.product
@@ -84,13 +87,19 @@ app.component('product-display', {
       return this.variants[this.selectedVariant].image
     },
     inStock() {
-      return this.variants[this.selectedVariant].quantity
+      // Count how many of the selected variant are in the cart
+      const variantCountInCart = this.cart.filter(item => item === this.variants[this.selectedVariant].id).length;
+
+      // Compare the number in the cart to the stock quantity of the selected variant
+      return this.variants[this.selectedVariant].quantity > variantCountInCart;
+    },
+    isVariantInCart() {
+      // Check if the currently selected variant exists in the cart
+      return this.cart.includes(this.variants[this.selectedVariant].id);
     },
     shipping() {
-      if (this.premium) {
-        return 'Free'
-      }
-      return 2.99
+      return this.premium ? 'Free' : 2.99;
     }
   }
+
 })

@@ -10,9 +10,9 @@ const app = Vue.createApp({
             this.cart.push(id)
         },
         removeById(id) {
-            const index = this.cart.indexOf(id)
+            const index = this.cart.lastIndexOf(id);
             if (index > -1) {
-                this.cart.splice(index, 1)
+                this.cart.splice(index, 1);
             }
         }
     }
