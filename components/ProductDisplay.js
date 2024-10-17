@@ -63,8 +63,8 @@ app.component('product-display', {
       selectedVariant: 0,
       details: ['50% Cotton', '30% Wool', '20% Polyester'],
       variants: [
-        { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50 },
-        { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 5 },
+        { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 10 },
+        { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 1 },
       ],
       reviews: []
     }
